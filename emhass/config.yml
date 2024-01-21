@@ -122,8 +122,8 @@ schema:
     - peak_hours_periods_end_hours: str
   list_treat_deferrable_load_as_semi_cont:
     - treat_deferrable_load_as_semi_cont: bool
-  list_set_deferrable_load_constant:
-    - set_deferrable_load_constant: bool  
+  set_def_constant:
+    - set_def_constant: bool  
   load_peak_hours_cost: float(0,)
   load_offpeak_hours_cost: float(0,)
   photovoltaic_production_sell_price: float(0,)
