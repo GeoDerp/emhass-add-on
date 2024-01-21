@@ -53,9 +53,6 @@ configuration:
   load_forecast_method:
     name: The load forecast method
     description: This defaults to 'naive'. The available options are 'csv', 'list' or 'mlforecaster' to use the machine learning forecaster.
-  weather_forecast_method:
-    name: The weather/production forecast method
-    description: This defaults to 'scrapper'. The available options are 'scrapper', 'csv', 'solcast' or 'solar.forecast'. See (wiki)[https://emhass.readthedocs.io/en/latest/forecasts.html#pv-power-production-forecast] for more information.
   sensor_power_photovoltaics:
     name: The Home Assistant sensor for PV power production
     description: This is the name of the photovoltaic produced power sensor in Watts from Home Assistant. For example sensor.power_photovoltaics.
@@ -80,6 +77,9 @@ configuration:
   list_treat_deferrable_load_as_semi_cont:
     name: A list to define if we should treat each deferrable load as a semi-continuous variable
     description: Semi-continuous variables are variables that can take either their nominal value or zero.
+  set_def_constant:
+    name: Define if we should set each deferrable load as a constant fixed value variable with just one startup for each optimization task
+    description: Boolean to enable or disable (if false, EMHASS will use P_deferrable_nom)
   load_peak_hours_cost:
     name: The cost of the electrical energy during peak hours
     description: The cost of the electrical energy from the grid during peak hours in €/kWh. Defaults to 0.1907.
