@@ -10,10 +10,32 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
-      - name: Build the builder
+      - name: build_amd64
         uses: home-assistant/builder@master
         with:
           args: |
             --test \
             --amd64 \
             --target emhass \
+      - name: build_aarch64
+        uses: home-assistant/builder@master
+        with:
+          args: |
+            --test \
+            --aarch64 \
+            --target emhass \      
+      - name: build_armhf
+        uses: home-assistant/builder@master
+        with:
+          args: |
+            --test \
+            --armhf \
+            --target emhass \      
+      - name: build_armv7
+        uses: home-assistant/builder@master
+        with:
+          args: |
+            --test \
+            --armv7 \
+            --target emhass \  
+
