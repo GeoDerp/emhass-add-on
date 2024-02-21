@@ -5,37 +5,18 @@ on:
   workflow_dispatch:
 jobs:
   build:
+    strategy:
+      matrix:
+        architecture: [amd64,aarch64,armhf,armv7]
     name: Test action build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
-      - name: build_amd64
+      - name: Test_Build_${{ matrix.architecture }}
         uses: home-assistant/builder@master
         with:
           args: |
             --test \
-            --amd64 \
+            --${{ matrix.architecture }} \
             --target emhass \
-      - name: build_aarch64
-        uses: home-assistant/builder@master
-        with:
-          args: |
-            --test \
-            --aarch64 \
-            --target emhass \      
-      - name: build_armhf
-        uses: home-assistant/builder@master
-        with:
-          args: |
-            --test \
-            --armhf \
-            --target emhass \      
-      - name: build_armv7
-        uses: home-assistant/builder@master
-        with:
-          args: |
-            --test \
-            --armv7 \
-            --target emhass \  
-
