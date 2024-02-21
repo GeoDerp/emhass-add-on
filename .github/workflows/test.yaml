@@ -17,4 +17,3 @@ jobs:
             --test \
             --amd64 \
             --target emhass \
-            --generic latest
