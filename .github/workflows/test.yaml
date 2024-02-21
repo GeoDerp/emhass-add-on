@@ -1,4 +1,4 @@
-name: "Test"
+name: "EMHASS-Add-on Build Test"
 
 on:
   pull_request:
