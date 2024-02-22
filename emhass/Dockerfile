@@ -27,6 +27,7 @@ RUN apt-get update \
     python3-wheel \
     python3-setuptools \
     python3-setuptools-whl \
+    python3-scipy \
     git \
     build-essential \
     gcc \
