@@ -18,12 +18,15 @@ COPY requirements.txt /app/
 
 # Setup
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+    apt-get install -y --no-install-recommends \
     libffi-dev \
     python3 \
     python3-pip \
     python3-dev \
-    # python3-numpy \
+    python3-numpy \
+    python3-wheel \
+    python3-setuptools \
+    python3-setuptools-whl \
     git \
     build-essential \
     gcc \
@@ -40,8 +43,6 @@ RUN apt-get update \
     libatlas-base-dev \
     && ln -s /usr/include/hdf5/serial /usr/include/hdf5/include \
     && export HDF5_DIR=/usr/include/hdf5 \
-    && pip3 install --extra-index-url=https://www.piwheels.org/simple --no-cache-dir --break-system-packages numpy --no-binary=:all: \
-    && pip3 install --extra-index-url=https://www.piwheels.org/simple --no-cache-dir --break-system-packages -U setuptools wheel \
     && pip3 install --extra-index-url=https://www.piwheels.org/simple --no-cache-dir --break-system-packages -r requirements.txt \
     && apt-get purge -y --auto-remove \
     gcc \
