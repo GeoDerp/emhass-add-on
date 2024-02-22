@@ -28,6 +28,7 @@ RUN apt-get update \
     python3-setuptools \
     python3-setuptools-whl \
     python3-scipy \
+    python3-pandas \
     git \
     build-essential \
     gcc \
