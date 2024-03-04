@@ -4,13 +4,15 @@
 ARG build_version=addon
 ARG BUILD_ARCH
 
-
 FROM ghcr.io/home-assistant/$BUILD_ARCH-base-debian:bookworm AS base
 
 WORKDIR /app
 COPY requirements.txt /app/
 
-# Setup
+#if arch is armhf add armhf package library 
+RUN [[ "${BUILD_ARCH}" == "armhf" ]] && dpkg --add-architecture armhf ; dpkg --remove-architecture armel || echo "not armf"
+
+#setup
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     libffi-dev \
@@ -28,20 +30,34 @@ RUN apt-get update \
     libhdf5-serial-dev \
     netcdf-bin \
     libnetcdf-dev \
+    libopenblas-dev \
+    cmake \
     pkg-config \
+    meson \
+    ninja-build \
+    patchelf \
     gfortran \
-    libatlas-base-dev \
-    && ln -s /usr/include/hdf5/serial /usr/include/hdf5/include \
-    && export HDF5_DIR=/usr/include/hdf5 \
-    && pip3 install --extra-index-url=https://www.piwheels.org/simple --no-cache-dir --break-system-packages -U setuptools wheel \
-    && pip3 install --extra-index-url=https://www.piwheels.org/simple --no-cache-dir --break-system-packages -r requirements.txt \
-    && apt-get purge -y --auto-remove \
+    libatlas-base-dev 
+RUN ln -s /usr/include/hdf5/serial /usr/include/hdf5/include 
+RUN export HDF5_DIR=/usr/include/hdf5 
+
+#install packages from pip, use piwheels if arm
+RUN [[ "${BUILD_ARCH}" == "armhf" || "${BUILD_ARCH}" == "armv7" ]] &&  pip3 install --index-url=https://www.piwheels.org/simple --no-cache-dir --break-system-packages -r requirements.txt ||  pip3 install --no-cache-dir --break-system-packages -r requirements.txt 
+
+#remove build only packages
+RUN apt-get purge -y --auto-remove \
+    ninja-build \
+    cmake \
+    meson \
+    patchelf \
     gcc \
     build-essential \
     libhdf5-dev \
     libhdf5-serial-dev \
     pkg-config \
     gfortran \
+    netcdf-bin \
+    libnetcdf-dev \
     && rm -rf /var/lib/apt/lists/*
 
 
